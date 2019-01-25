@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import ImagePath from '../../Config/image';
 import Card from '../../Components/Card';
 
@@ -15,10 +15,10 @@ class Home extends Component {
         }
     }
 
-    state = { users: null, page: 1 }
+    state = { users: [], page: 1 }
 
     handleGetUsers = () => {
-        let { page } = this.state
+        let { page, users } = this.state
         const api = `https://reqres.in/api/users?page=${page}`
         const headers = {
             'Content-Type': 'application/json'
@@ -31,9 +31,13 @@ class Home extends Component {
             .then((response) => response.json())
             .then((responseJSON) => {
                 console.log('return', responseJSON)
-                let page = this.state.page + 1
+                let page = this.state.page + 1;
+                for (let i = 0; i < responseJSON.data.length; i++) {
+                    this.state.users.push(responseJSON.data[i])
+                }
+
                 this.setState({
-                    users: responseJSON.data,
+                    users: users,
                     page: page
                 })
             })
@@ -41,7 +45,7 @@ class Home extends Component {
 
     renderComponent = () => {
         let { users } = this.state
-        if (!users) {
+        if (users.length == 0) {
             return (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <TouchableOpacity onPress={this.handleGetUsers}>
@@ -65,15 +69,21 @@ class Home extends Component {
     }
 
     render() {
+        console.log('this ste', this.state.users)
         return (
-            <View style={{ flex: 1, backgroundColor: 'white' }}>
+            <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
                 {this.renderComponent()}
-                {this.state.users && <TouchableOpacity onPress={this.handleGetUsers}>
+                {this.state.users.length !== 0 && this.state.page !== 5
+                    &&
+                    <View>
+                        <TouchableOpacity onPress={this.handleGetUsers}>
                             <Image
                                 source={ImagePath.icon.loading}
-                                style={{ width: 70, height: 70, alignSelf: 'center' }} />
-                        </TouchableOpacity>}
-            </View>
+                                style={{ width: 50, height: 50, alignSelf: 'center' }} />
+                        </TouchableOpacity>
+                    </View>
+                }
+            </ScrollView>
         )
     }
 }
