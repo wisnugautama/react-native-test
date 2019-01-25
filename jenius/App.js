@@ -25,7 +25,7 @@ const LoginStack = createStackNavigator({
 })
 
 const AppSwitchNavigator = createSwitchNavigator({
-  Login: LoginStack,
+  // Login: LoginStack,
   Home: HomeStack
 })
 
