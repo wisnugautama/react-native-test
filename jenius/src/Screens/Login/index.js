@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View,Text, TextInput, TouchableOpacity, Button } from 'react-native';
+import { View,Text,TextInput, Alert } from 'react-native';
 import styles from './style';
 import CustomButton from '../../Components/CustomButton';
 
@@ -15,10 +15,35 @@ class Login extends Component {
         }
     }
 
-    state = { email: '', password: '', error: false }
+    state = { email: '', password: ''}
 
     handleLogin = () => {
-        console.log('lagu')
+        let { email,password } = this.state
+        const api = `https://reqres.in/api/login`;
+        const headers = {
+                'Content-Type': 'application/json'
+        }
+        const body = {
+            email: email,
+            password: password 
+        }
+
+        fetch(api, {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(body)
+        })
+            .then((response) => response.json())
+            .then((responseJSON) => {
+                if (responseJSON.token) {
+                    this.props.navigation.navigate('HomeScreen')
+                } else {
+                    Alert.alert('Warning', responseJSON.error)
+                }
+            })
+            .catch((err) => {
+                console.log('err', err)
+            })
     }
 
     render() {
@@ -31,6 +56,7 @@ class Login extends Component {
                         onChangeText={(email) => { this.setState({ email: email }) }} />
                     <TextInput
                         placeholder={"Password"}
+                        secureTextEntry={true}
                         style={styles.textInputStyle}
                         value={this.state.password}
                         onChangeText={(password) => { this.setState({ password: password }) }} />
