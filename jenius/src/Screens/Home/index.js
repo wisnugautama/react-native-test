@@ -68,17 +68,21 @@ class Home extends Component {
     }
 
     render() {
-        console.log('this ste', this.state.users)
         return (
             <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
                 {this.renderComponent()}
                 {this.state.users.length !== 0 && this.state.page !== 5
                     &&
-                    <View>
-                        <TouchableOpacity onPress={this.handleGetUsers}>
+                    <View style={{ flexDirection: 'row', flex: 1 }}>
+                        <TouchableOpacity onPress={this.handleGetUsers} style={{ flex: 2, alignItems: 'center', marginRight: 40, marginTop: 20 }}>
                             <Image
                                 source={ImagePath.icon.loading}
-                                style={{ width: 50, height: 50, alignSelf: 'center' }} />
+                                style={{ width: 50, height: 50, alignSelf: 'flex-end' }} />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddUserScreen')} style={{ flex: 1, marginRight: 20 }}>
+                            <Image
+                                source={ImagePath.icon.add}
+                                style={{ width: 70, height: 70, alignSelf: 'flex-end' }} />
                         </TouchableOpacity>
                     </View>
                 }

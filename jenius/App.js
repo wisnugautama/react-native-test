@@ -12,10 +12,12 @@ import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 import Home from './src/Screens/Home';
 import Login from './src/Screens/Login';
 import Detail from './src/Screens/Detail';
+import AddUser from './src/Screens/AddUser';
 
 const HomeStack = createStackNavigator({
   HomeScreen: { screen: Home },
-  DetailsScreen: { screen: Detail }
+  DetailsScreen: { screen: Detail },
+  AddUserScreen: { screen: AddUser }
 },{
   initialRouteName: 'HomeScreen'
 })

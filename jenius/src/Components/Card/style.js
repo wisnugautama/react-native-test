@@ -7,7 +7,8 @@ export default StyleSheet.create({
         borderColor: '#ddd', 
         marginBottom: 10, 
         alignItems: 'center', 
-        height: 60 
+        height: 60,
+        elevation: 1
     },
     imageStyle: { 
         width: 40, 
