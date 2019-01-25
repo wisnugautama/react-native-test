@@ -60,8 +60,7 @@ class Home extends Component {
                 return (
                     <View key={id}>
                         <Card
-                            name={`${data.first_name} ${data.last_name}`}
-                            avatar={data.avatar} />
+                            data={data} />
                     </View>
                 )
             })

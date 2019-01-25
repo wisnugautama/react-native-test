@@ -11,9 +11,11 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 import Home from './src/Screens/Home';
 import Login from './src/Screens/Login';
+import Detail from './src/Screens/Detail';
 
 const HomeStack = createStackNavigator({
   HomeScreen: { screen: Home },
+  DetailsScreen: { screen: Detail }
 },{
   initialRouteName: 'HomeScreen'
 })
@@ -25,7 +27,7 @@ const LoginStack = createStackNavigator({
 })
 
 const AppSwitchNavigator = createSwitchNavigator({
-  // Login: LoginStack,
+  Login: LoginStack,
   Home: HomeStack
 })
 

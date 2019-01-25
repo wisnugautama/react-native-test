@@ -11,7 +11,7 @@ export default StyleSheet.create({
         borderRadius: 2,
         alignSelf: 'center',
         height: 40,
-        elevation: 5
+        elevation: 2
     },
     fontStyle: { color: 'white', fontWeight: '500' }
 })
