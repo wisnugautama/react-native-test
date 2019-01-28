@@ -1,7 +1,23 @@
 import React, { Component } from 'react';
-import { View,Text,TextInput, Alert } from 'react-native';
+import { View,TextInput, Alert } from 'react-native';
 import styles from './style';
 import CustomButton from '../../Components/CustomButton';
+import { loginPending, loginSucess, loginFailed } from '../../Store/actions/AuthAction';
+import { connect } from 'react-redux';
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        pendingLogin: () => {
+            dispatch(loginPending(null))
+        },
+        successLogin: (auth) => {
+            dispatch(loginSucess(auth))
+        },
+        failedLogin: (auth) => {
+            dispatch(loginFailed(auth))
+        }
+    }
+}
 
 class Login extends Component {
     static navigationOptions = {
@@ -18,6 +34,7 @@ class Login extends Component {
     state = { email: '', password: ''}
 
     handleLogin = () => {
+        this.props.pendingLogin()
         let { email,password } = this.state
         const api = `https://reqres.in/api/login`;
         const headers = {
@@ -36,8 +53,10 @@ class Login extends Component {
             .then((response) => response.json())
             .then((responseJSON) => {
                 if (responseJSON.token) {
+                    this.props.successLogin(responseJSON.token)
                     this.props.navigation.navigate('HomeScreen')
                 } else {
+                    this.props.failedLogin(responseJSON.error)
                     Alert.alert('Warning', responseJSON.error)
                 }
             })
@@ -68,4 +87,4 @@ class Login extends Component {
     }
 }
 
-export default Login
+export default connect(null, mapDispatchToProps)(Login)
