@@ -13,6 +13,8 @@ import Home from './src/Screens/Home';
 import Login from './src/Screens/Login';
 import Detail from './src/Screens/Detail';
 import AddUser from './src/Screens/AddUser';
+import { Provider } from 'react-redux';
+import Store from './src/Store';
 
 const HomeStack = createStackNavigator({
   HomeScreen: { screen: Home },
