@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import ImagePath from '../../Config/image';
+import styles from './style';
 import Card from '../../Components/Card';
 import { connect } from 'react-redux';
 import { getUserPending, getUserSuccess, getUserFailed } from '../../Store/actions/UserAction';
+import RefreshButton from '../../Components/RefreshButton';
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -96,18 +98,16 @@ class Home extends Component {
     }
 
     render() {
-        console.log('ini users', this.props.user)
         return (
-            <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
+            <ScrollView style={styles.wrapperStyle}>
                 {this.renderComponent()}
-                <View style={{ flexDirection: 'row', flex: 1 }}>
+                <View style={styles.contentWrapper}>
                     {this.state.users.length !== 0 && this.state.page !== 5
                         &&
-                        <TouchableOpacity onPress={this.handleGetUsers} style={{ flex: 2, alignItems: 'center', marginRight: 40, marginTop: 20 }}>
-                            <Image
-                                source={ImagePath.icon.loading}
-                                style={{ width: 50, height: 50, alignSelf: 'flex-end' }} />
-                        </TouchableOpacity>
+                        <RefreshButton 
+                           style={styles.refreshButtonWrapperStyle}
+                           imageStyle={styles.refreshImageStyle}
+                           onPress={this.handleGetUsers} />
                     }
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('AddUserScreen')} style={{ flex: 1, marginRight: 20 }}>
                         <Image
